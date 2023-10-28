@@ -45,11 +45,38 @@ export class TeamBusiness {
     }
   };
 
-  getAllTeams = async (): Promise<TeamOutput[]> => {
+  getAllTeams = async (): Promise<TeamOutput> => {
     try {
       const teams = await this.teamData.getAllTeams();
+      const teamsFormatted: TeamOutput = {};
 
-      return teams;
+      teams.forEach((team) => {
+        const { owner, id, name, weight, height } = team;
+
+        if (!teamsFormatted[owner]) {
+          teamsFormatted[owner] = {
+            owner,
+            pokemons: [],
+          };
+        }
+
+        teamsFormatted[owner].pokemons.push({
+          id,
+          name,
+          weight,
+          height,
+        });
+      });
+
+      const result: TeamOutput = {};
+      let index = 1;
+
+      for (const owner in teamsFormatted) {
+        result[index] = teamsFormatted[owner];
+        index++;
+      }
+
+      return result;
     } catch (error: any) {
       throw new Error(error.message);
     }
