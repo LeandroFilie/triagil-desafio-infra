@@ -26,9 +26,22 @@ export class TeamData extends BaseDatabase {
     }
   };
 
-  getTeamById = async (teamID: string): Promise<TeamOutput[]> => {
+  getTeamById = async (teamID: string): Promise<any[]> => {
     try {
-      return [];
+      const trx = await this.connection.transaction();
+      const result = await trx(this.TABLE_NAME)
+        .select(
+          'team.owner',
+          'pokemon.id',
+          'pokemon.name',
+          'pokemon.height',
+          'pokemon.weight',
+        )
+        .innerJoin('team_pokemon', 'team_pokemon.id_team', '=', 'team.id')
+        .innerJoin('pokemon', 'pokemon.id', '=', 'team_pokemon.id_pokemon')
+        .where({ 'team.id': teamID });
+      await trx.commit();
+      return result;
     } catch (error: any) {
       throw new Error(error.message);
     }

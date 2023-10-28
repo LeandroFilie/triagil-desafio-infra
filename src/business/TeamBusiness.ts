@@ -57,7 +57,16 @@ export class TeamBusiness {
 
   getTeamById = async (teamID: string) => {
     try {
-      const team = await this.teamData.getTeamById(teamID);
+      const teams = await this.teamData.getTeamById(teamID);
+
+      const team = {
+        owner: teams[0].owner,
+        pokemons: teams.map((pokemon) => ({
+          name: pokemon.name,
+          height: pokemon.height,
+          weight: pokemon.weight,
+        })),
+      };
 
       return team;
     } catch (error: any) {

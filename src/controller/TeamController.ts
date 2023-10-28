@@ -29,7 +29,7 @@ export class TeamController {
     try {
       const { id } = req.params;
       const result = await this.teamBusiness.getTeamById(id);
-      res.status(200).send({ result });
+      res.status(200).send(result);
     } catch (error: any) {
       res.status(500).send({ error: error.message });
     }
