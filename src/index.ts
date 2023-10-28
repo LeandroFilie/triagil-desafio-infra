@@ -4,15 +4,15 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 
+import { teamRouter } from './routes/TeamRouter';
+
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.json({ message: 'Hello World' });
-});
+app.use('/api', teamRouter);
 
 const server = app.listen(process.env.PORT || 3000, () => {
   if (server) {

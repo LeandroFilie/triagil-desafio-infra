@@ -55,6 +55,16 @@
       {
         "allowEmptyCatch": true
       }
-    ]
+    ],
+    "no-empty-function": "off",
+    "import/prefer-default-export": "off",
+    "class-methods-use-this": "off",
+    "no-useless-constructor": "off",
+    "no-unused-vars": "warn",
+    "consistent-return": "off",
+    "no-unreachable": "off",
+    "no-restricted-syntax": "off",
+    "guard-for-in": "off",
+    "no-plusplus": "off"
   }
 }

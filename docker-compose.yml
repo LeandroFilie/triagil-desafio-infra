@@ -1,7 +1,7 @@
 version: "2"
 services:
   mysqldb:
-    image: mysql:5.7
+    image: mysql:8
     container_name: triagildatabase
     restart: unless-stopped
     env_file: ./.env
@@ -13,16 +13,11 @@ services:
       - "3306:3306"
     expose:
       - "3306"
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 5s
-      retries: 10
     volumes:
       - ./src/data:/docker-entrypoint-initdb.d
   app:
     depends_on:
-      mysqldb:
-        condition: service_healthy
+      - mysqldb
     container_name: triagilapp
     build:
       context: ./
@@ -31,11 +26,11 @@ services:
     restart: unless-stopped
     env_file: ./.env
     environment:
-      - MYSQL_HOST=mysqldb
-      - MYSQL_LOCAL_PORT=$DATABASE_PORT
-      - MYSQL_DATABASE=$DATABASE_NAME
-      - MYSQL_USERNAME=$DATABASE_USERNAME
-      - MYSQL_PASSWORD=$DATABASE_PASSWORD
+      - DATABASE_HOST=mysqldb
+      - DATABASE_PORT=$DATABASE_PORT
+      - DATABASE_NAME=$DATABASE_NAME
+      - DATABASE_USERNAME=$DATABASE_USERNAME
+      - DATABASE_PASSWORD=$DATABASE_PASSWORD
     expose:
       - "3003"
     ports:

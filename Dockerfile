@@ -1,5 +1,6 @@
 FROM node:alpine
 
+RUN mkdir -p /usr/src/triagilapp
 WORKDIR /usr/src/triagilapp
 
 RUN apk update && apk upgrade
