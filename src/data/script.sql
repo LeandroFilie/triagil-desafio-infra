@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS team (
 
 CREATE TABLE IF NOT EXISTS pokemon (
 	id varchar(55) primary key,
-  nome varchar(40) not null,
+  name varchar(40) not null,
   height float not null,
   weight float not null
 ) engine=InnoDB;
